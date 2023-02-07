@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import GlobalService from "../../Services/Travlog/GlobalService";
 import { useState } from "react";
 import Article from "../Article/Article";
-import "./Feed.scss"
+import "./Feed.scss";
 
 export default function Feed() {
   const [feed, setFeed] = useState([]);
@@ -15,7 +15,6 @@ export default function Feed() {
     const result = await GlobalService.getEverythingSorted();
     setFeed(result);
   };
-  console.log(feed);
   const feedList = feed.map((article) => {
     return (
       <Article
@@ -26,6 +25,9 @@ export default function Feed() {
         comments={article.comments}
         rating={article.rating}
         createdAt={article.createdAt}
+        maps={article.map}
+        city={article.city}
+        id={article._id}
       />
     );
   });

@@ -1,17 +1,10 @@
 import React from "react";
 import Home from "./Containers/Home/Home";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Routes,
-  Router,
-  BrowserRouter,
-  Link,
-  createRoutesFromElements,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, BrowserRouter } from "react-router-dom";
 import NavBar from "./Components/NavBar/NavBar";
+import Login from "./Containers/Login/Login";
+import Register from "./Containers/Register/Register";
+import Create from "./Containers/Create/Create";
 
 export default function App() {
   return (
@@ -20,6 +13,9 @@ export default function App() {
         <NavBar />
         <Routes>
           <Route path="/" element={<Home />}></Route>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route path="/create" element={<Create />}></Route>
         </Routes>
       </BrowserRouter>
     </div>
