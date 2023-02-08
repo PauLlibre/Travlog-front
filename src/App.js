@@ -5,6 +5,8 @@ import NavBar from "./Components/NavBar/NavBar";
 import Login from "./Containers/Login/Login";
 import Register from "./Containers/Register/Register";
 import Create from "./Containers/Create/Create";
+import Profile from "./Containers/Profile/Profile";
+import MyPosts from "./Containers/MyPosts/MyPosts";
 
 export default function App() {
   return (
@@ -16,6 +18,8 @@ export default function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/create" element={<Create />}></Route>
+          <Route path="/myPosts/:id" element={<MyPosts />}></Route>
+          <Route path="/profile/:id" element={<Profile />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

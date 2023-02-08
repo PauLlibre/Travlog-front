@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import PostService from "../../Services/Travlog/PostService";
 
 export default function Create() {
+  const navigate = useNavigate();
   const [type, setType] = useState("");
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -18,6 +20,7 @@ export default function Create() {
       map,
       city
     );
+    navigate("/");
     console.log(res);
   };
 

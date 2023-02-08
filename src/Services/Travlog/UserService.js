@@ -9,4 +9,9 @@ UserService.getUserById = async (id) => {
   return data.data.data;
 };
 
+UserService.modifyUser = async (id, details) => {
+  const data = await axios.patch(baseUrl + "/" + id, details);
+  return data.data;
+};
+
 export default UserService;
