@@ -8,6 +8,7 @@ import {
 } from "@react-google-maps/api";
 import Places from "../Places/Places";
 import "./Map.scss";
+import RouteInfo from "../RouteInfo/RouteInfo";
 
 export default function Map() {
   const loc = JSON.parse(localStorage.getItem("LOC"));
@@ -18,7 +19,7 @@ export default function Map() {
   const [directions, setDirections] = useState(null);
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDNaZDILHnFdvAkqphbTIItV82nnsVTJNU",
+    googleMapsApiKey: "",
     libraries,
   });
 
@@ -45,6 +46,7 @@ export default function Map() {
     const latlng = {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
+      place_id: event.placeId,
     };
     setMarkers((currentMarkers) => [...currentMarkers, latlng]);
     console.log(markers);
@@ -69,7 +71,13 @@ export default function Map() {
         }
       }
     );
+    handleGetRouteInfo();
   };
+
+  const handleGetRouteInfo = () => {
+    return <RouteInfo markers={markers} />;
+  };
+
   const center = useMemo(() => selected, [selected]);
 
   const handleShareRoute = () => {
@@ -109,6 +117,22 @@ export default function Map() {
     window.open(url, "_blank");
   };
 
+  const handleMarkerClick = (index) => {
+    setMarkers((currentMarkers) => {
+      return currentMarkers.filter((_, i) => i !== index);
+    });
+  };
+
+  const renderMarkers = () => {
+    return markers.map((marker, index) => (
+      <MarkerF
+        key={index}
+        position={{ lat: marker.lat, lng: marker.lng }}
+        onClick={() => handleMarkerClick(index)}
+      />
+    ));
+  };
+
   if (loadError) return "Error";
 
   if (!isLoaded) return <div>Loading...</div>;
@@ -123,13 +147,12 @@ export default function Map() {
         mapContainerClassName="map-container"
         onClick={handleMapClick}
       >
-        {markers.map((marker, index) => (
-          <MarkerF key={index} position={marker} />
-        ))}
+        {renderMarkers()}
         {directions && <DirectionsRenderer directions={directions} />}
       </GoogleMap>
       <button onClick={handleGenerateRoute}>GENERATE ROUTE</button>
       <button onClick={handleShareRoute}>SHARE ROUTE</button>
+      {handleGetRouteInfo()}
     </>
   );
 }

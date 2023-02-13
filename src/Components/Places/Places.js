@@ -14,15 +14,16 @@ export default function Places({ setSelected, setMarkers }) {
     clearSuggestions,
   } = usePlacesAutocomplete();
 
-  const handleSelect = async (address) => {
+  const handleSelect = async (address, place_id) => {
     setValue(address, false);
     clearSuggestions();
 
     const results = await getGeocode({ address });
+    console.log(results);
     const { lat, lng } = await getLatLng(results[0]);
     console.log(lat, lng);
     setSelected({ lat, lng });
-    setMarkers((currentMarkers) => [...currentMarkers, { lat, lng }]);
+    setMarkers((currentMarkers) => [...currentMarkers, { lat, lng, place_id }]);
   };
 
   return (
@@ -36,7 +37,7 @@ export default function Places({ setSelected, setMarkers }) {
       />
       {status === "OK" &&
         data.map(({ place_id, description }) => (
-          <div onClick={() => handleSelect(description)} key={place_id}>
+          <div onClick={() => handleSelect(description, place_id)} key={place_id}>
             {description}
           </div>
         ))}

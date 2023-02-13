@@ -1,0 +1,11 @@
+.pics {
+  display: flex;
+  overflow: scroll;
+  gap: 10px;
+}
+
+.pics img {
+  max-width: 200px;
+  max-height: 200px;
+  border-radius: 10px;
+}
