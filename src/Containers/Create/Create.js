@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import PostService from "../../Services/Travlog/PostService";
 
@@ -10,6 +10,10 @@ export default function Create() {
   const [map, setMap] = useState("");
   const [city, setCity] = useState("");
   const id = localStorage.getItem("USER");
+
+  useEffect(() => {
+    if (type === "route") handleRoute();
+  }, [type]);
 
   const handleSubmit = async () => {
     const res = await PostService.makePost(
@@ -40,12 +44,17 @@ export default function Create() {
     setCity(ev.target.value);
   };
 
+  const handleRoute = () => {
+    navigate("/create/route");
+  };
   return (
     <div>
       <label htmlFor="">TYPE</label>
       <select value={type} onChange={(e) => setType(e.target.value)}>
         <option value="">Select type</option>
-        <option value="route">Route</option>
+        <option value="route" onClick={() => handleRoute()}>
+          Route
+        </option>
         <option value="post">Post</option>
       </select>
       <label htmlFor="">TITLE</label>

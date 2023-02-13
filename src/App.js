@@ -7,6 +7,7 @@ import Register from "./Containers/Register/Register";
 import Create from "./Containers/Create/Create";
 import Profile from "./Containers/Profile/Profile";
 import MyPosts from "./Containers/MyPosts/MyPosts";
+import RouteCreate from "./Containers/RouteCreate/RouteCreate";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
           <Route path="/create" element={<Create />}></Route>
           <Route path="/myPosts/:id" element={<MyPosts />}></Route>
           <Route path="/profile/:id" element={<Profile />}></Route>
+          <Route path="/create/route" element={<RouteCreate />}></Route>
         </Routes>
       </BrowserRouter>
     </div>

@@ -12,6 +12,7 @@ export default function Profile() {
   const [changePassword, setChangePassword] = useState(false);
   const [newName, setNewName] = useState(user.name);
   const [newEmail, setNewEmail] = useState(user.email);
+  console.log(user.name);
 
   useEffect(() => {
     getUserById();
