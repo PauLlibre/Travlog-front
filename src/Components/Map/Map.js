@@ -32,7 +32,7 @@ export default function Map() {
   const user_id = localStorage.getItem("USER");
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: process.env.REACT_APP_API_KEY,
     libraries,
   });
 
