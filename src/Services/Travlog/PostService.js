@@ -11,7 +11,8 @@ PostService.makePost = async (
   description,
   map,
   city,
-  route
+  route,
+  duration
 ) => {
   const details = {
     user_id: id,
@@ -19,8 +20,11 @@ PostService.makePost = async (
     description,
     map,
     city,
-    route_description: route,
+    route_description: route.details,
+    duration,
   };
+
+  console.log(details);
 
   let res = "";
   try {

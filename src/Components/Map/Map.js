@@ -24,6 +24,7 @@ export default function Map() {
   const [description, setDescription] = useState("");
   const [city, setCity] = useState("");
   const [map, setMap] = useState("");
+  const [duration, setDuration] = useState();
   const dispatch = useDispatch();
   const details = useSelector((state) => {
     return state.createRoute;
@@ -31,7 +32,7 @@ export default function Map() {
   const user_id = localStorage.getItem("USER");
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "AIzaSyDNaZDILHnFdvAkqphbTIItV82nnsVTJNU",
+    googleMapsApiKey: "",
     libraries,
   });
 
@@ -85,6 +86,15 @@ export default function Map() {
       (result, status) => {
         if (status === "OK") {
           setDirections(result);
+          console.log(directions);
+          let totalDuration = 0;
+          result.routes[0].legs.forEach((leg) => {
+            console.log(leg.duration);
+            totalDuration += Math.round(leg.duration.value / 60 / 60);
+          });
+          setDuration(totalDuration);
+          console.log(duration);
+          console.log("Total duration of the route:", totalDuration, " hours");
         } else {
           console.error(`error fetching directions ${result}`);
         }
@@ -185,7 +195,8 @@ export default function Map() {
       description,
       map,
       city,
-      route
+      route,
+      duration
     );
   };
 
@@ -223,6 +234,7 @@ export default function Map() {
       <button onClick={handleShareRoute}>SHARE ROUTE</button>
 
       {handleGetRouteInfo()}
+      <div>Duration: {duration} hours</div>
       <button onClick={handleShare}>SHARE</button>
     </>
   );
