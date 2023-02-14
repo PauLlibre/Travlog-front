@@ -1,18 +1,27 @@
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Route } from "react-router-dom";
 import GetPlaceInfo from "../../Services/Maps/GetPlaceInfo";
 import "./RouteInfoCard.scss";
+import { update } from "../../Features/routeCreation";
 
-export default function RouteInfoCard({ marker }) {
+export default function RouteInfoCard({ marker, index }) {
+  const dispatch = useDispatch();
   const [routeInfo, setRouteInfo] = useState({});
   const [showTimetables, setShowTimetables] = useState(false);
   const [showPictures, setShowPictures] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
+  const [description, setDescription] = useState("");
 
   const [placeType, setPlaceType] = useState([]);
   const [time, setTime] = useState("");
 
-  console.log(marker);
+  let step = {};
+
+  useEffect(() => {
+    dispatch(update({ description, time, index }));
+  }, [time, description]);
+
 
   useEffect(() => {
     RouteInfo();
@@ -36,7 +45,6 @@ export default function RouteInfoCard({ marker }) {
 
   const arePictures = () => {
     try {
-      console.log(placeType);
       const res = routeInfo.photos;
       return res.map((pic) => {
         let url = pic.getUrl();
@@ -49,8 +57,6 @@ export default function RouteInfoCard({ marker }) {
 
   const areReviews = () => {
     try {
-      console.log(routeInfo);
-
       const res = routeInfo.reviews;
       return res.map((review) => {
         return <div>{review.text}</div>;
@@ -67,6 +73,12 @@ export default function RouteInfoCard({ marker }) {
   const handleTime = (ev) => {
     setTime(ev.target.value);
   };
+
+  const handleDescription = (ev) => {
+    setDescription(ev.target.value);
+  };
+
+  const rating = routeInfo.rating;
 
   return (
     <div>
@@ -110,9 +122,13 @@ export default function RouteInfoCard({ marker }) {
           )}
         </>
       )}
+      {rating && <div>{rating}/5</div>}
+
       <div>
         <label htmlFor="">Description: </label>
         <textarea
+          value={description}
+          onChange={handleDescription}
           name=""
           id=""
           cols="30"

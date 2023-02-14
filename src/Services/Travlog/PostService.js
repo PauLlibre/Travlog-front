@@ -4,13 +4,22 @@ const PostService = {};
 
 const baseUrl = "http://localhost:3000/";
 
-PostService.makePost = async (id, type, title, description, map, city) => {
+PostService.makePost = async (
+  id,
+  type,
+  title,
+  description,
+  map,
+  city,
+  route
+) => {
   const details = {
     user_id: id,
     title,
     description,
     map,
     city,
+    route_description: route,
   };
 
   let res = "";

@@ -9,24 +9,44 @@ import {
 import Places from "../Places/Places";
 import "./Map.scss";
 import RouteInfo from "../RouteInfo/RouteInfo";
+import { useDispatch, useSelector } from "react-redux";
+import { add, retrieve } from "../../Features/routeCreation";
+import PostService from "../../Services/Travlog/PostService";
 
 export default function Map() {
   const loc = JSON.parse(localStorage.getItem("LOC"));
   const [libraries] = useState(["places", "directions"]);
   const [location, setLocation] = useState({});
-  const [selected, setSelected] = useState(loc || location);
+  const [center, setCenter] = useState(loc || location);
   const [markers, setMarkers] = useState([]);
   const [directions, setDirections] = useState(null);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [city, setCity] = useState("");
+  const [map, setMap] = useState("");
+  const dispatch = useDispatch();
+  const details = useSelector((state) => {
+    return state.createRoute;
+  });
+  const user_id = localStorage.getItem("USER");
 
   const { isLoaded, loadError } = useLoadScript({
-    googleMapsApiKey: "",
+    googleMapsApiKey: "AIzaSyDNaZDILHnFdvAkqphbTIItV82nnsVTJNU",
     libraries,
   });
+
+  const route = {
+    title,
+    description,
+    city,
+    map,
+    details,
+  };
 
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
-        setSelected({
+        setCenter({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
         });
@@ -42,14 +62,13 @@ export default function Map() {
   }, []);
 
   const handleMapClick = (event) => {
-    console.log(event);
     const latlng = {
       lat: event.latLng.lat(),
       lng: event.latLng.lng(),
       place_id: event.placeId,
     };
     setMarkers((currentMarkers) => [...currentMarkers, latlng]);
-    console.log(markers);
+    dispatch(add(latlng));
   };
 
   const handleGenerateRoute = () => {
@@ -78,11 +97,8 @@ export default function Map() {
     return <RouteInfo markers={markers} />;
   };
 
-  const center = useMemo(() => selected, [selected]);
-
-  const handleShareRoute = () => {
+  const handleShareRoute = async () => {
     if (!directions) return;
-    console.log(directions);
     const origin = encodeURIComponent(
       (() => {
         const lat = directions.request.origin.location.lat();
@@ -98,20 +114,18 @@ export default function Map() {
         return lat + "," + lng;
       })()
     );
-    console.log(directions.geocoded_waypoints);
     const waypoints = encodeURIComponent(
       directions.request.waypoints
         .map((waypoint) => {
           const lat = waypoint.location.location.lat();
           const lng = waypoint.location.location.lng();
-          console.log(lat);
-          console.log(lng);
           return lat + "," + lng;
         })
         .join("|")
     );
     const url = `https://www.google.com/maps/dir/?api=1&origin=${origin}&destination=${destination}&waypoints=${waypoints}&travelmode=walking`;
-    console.log(url);
+    setMap(url);
+
     // You can now use the URL to share the route.
     // You could open it in a new tab, copy it to the clipboard, or share it through a third-party service.
     window.open(url, "_blank");
@@ -119,6 +133,7 @@ export default function Map() {
 
   const handleMarkerClick = (index) => {
     setMarkers((currentMarkers) => {
+      dispatch(retrieve(index));
       return currentMarkers.filter((_, i) => i !== index);
     });
   };
@@ -133,16 +148,70 @@ export default function Map() {
     ));
   };
 
+  const handleTitle = (ev) => {
+    setTitle(ev.target.value);
+  };
+
+  const handleDescription = (ev) => {
+    setDescription(ev.target.value);
+  };
+
+  const handleCityChange = (ev) => {
+    setCity(ev.target.value);
+  };
+
+  const handleCity = (ev) => {
+    ev.preventDefault();
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ address: city.toLowerCase() }, (results, status) => {
+      if (status === "OK") {
+        setCenter({
+          lat: results[0].geometry.location.lat(),
+          lng: results[0].geometry.location.lng(),
+        });
+      } else {
+        console.error(
+          `Geocode was not successful for the following reason: ${status}`
+        );
+      }
+    });
+  };
+
+  const handleShare = async () => {
+    const res = await PostService.makePost(
+      user_id,
+      "route",
+      title,
+      description,
+      map,
+      city,
+      route
+    );
+  };
+
   if (loadError) return "Error";
 
   if (!isLoaded) return <div>Loading...</div>;
   return (
     <>
       <div>
-        <Places setSelected={setSelected} setMarkers={setMarkers}></Places>
+        <label htmlFor="">TITLE</label>
+        <input type="text" value={title} onChange={handleTitle} />
+      </div>
+      <div>
+        <label htmlFor="">DESCRIPTION</label>
+        <input type="text" value={description} onChange={handleDescription} />
+      </div>
+      <div>
+        <label htmlFor="">CITY</label>
+        <input type="text" value={city} onChange={handleCityChange} />
+        <button onClick={handleCity}>SET CITY</button>
+      </div>
+      <div>
+        <Places setSelected={setCenter} setMarkers={setMarkers}></Places>
       </div>
       <GoogleMap
-        zoom={10}
+        zoom={12}
         center={center}
         mapContainerClassName="map-container"
         onClick={handleMapClick}
@@ -152,7 +221,9 @@ export default function Map() {
       </GoogleMap>
       <button onClick={handleGenerateRoute}>GENERATE ROUTE</button>
       <button onClick={handleShareRoute}>SHARE ROUTE</button>
+
       {handleGetRouteInfo()}
+      <button onClick={handleShare}>SHARE</button>
     </>
   );
 }

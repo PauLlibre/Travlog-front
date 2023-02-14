@@ -1,11 +1,14 @@
 import { MarkerClusterer } from "@react-google-maps/api";
 import React from "react";
+import { useDispatch } from "react-redux";
 import usePlacesAutocomplete, {
   getGeocode,
   getLatLng,
 } from "use-places-autocomplete";
+import { add } from "../../Features/routeCreation";
 
 export default function Places({ setSelected, setMarkers }) {
+  const dispatch = useDispatch();
   const {
     ready,
     value,
@@ -24,6 +27,7 @@ export default function Places({ setSelected, setMarkers }) {
     console.log(lat, lng);
     setSelected({ lat, lng });
     setMarkers((currentMarkers) => [...currentMarkers, { lat, lng, place_id }]);
+    dispatch(add({ lat, lng, place_id }));
   };
 
   return (
@@ -37,7 +41,10 @@ export default function Places({ setSelected, setMarkers }) {
       />
       {status === "OK" &&
         data.map(({ place_id, description }) => (
-          <div onClick={() => handleSelect(description, place_id)} key={place_id}>
+          <div
+            onClick={() => handleSelect(description, place_id)}
+            key={place_id}
+          >
             {description}
           </div>
         ))}
