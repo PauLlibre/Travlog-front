@@ -12,22 +12,35 @@ export default function RouteInfoCard({ marker, index }) {
   const [showPictures, setShowPictures] = useState(false);
   const [showReviews, setShowReviews] = useState(false);
   const [description, setDescription] = useState("");
+  const [duration, setDuration] = useState(0);
 
   const [placeType, setPlaceType] = useState([]);
   const [time, setTime] = useState("");
 
-  let step = {};
+  useEffect(() => {
+    if (index) {
+      console.log("hola");
+      dispatch(update({ description, time, index, duration, placeType }));
+    }
+  }, [time, description, duration, placeType]);
 
   useEffect(() => {
-    dispatch(update({ description, time, index }));
-  }, [time, description]);
-
+    if (placeType.includes("restaurant")) {
+      setDuration(duration + 90 * 60);
+    } else if (
+      placeType.includes("tourist_attraction") ||
+      placeType.includes("point_of_interest")
+    ) {
+      setDuration(duration + 3600);
+    }
+  }, [placeType]);
 
   useEffect(() => {
     RouteInfo();
   }, []);
 
   const RouteInfo = async () => {
+    console.log(marker);
     await GetPlaceInfo.getByMarker(marker.place_id, (result) => {
       setRouteInfo(result);
       setPlaceType(result.types);
@@ -67,7 +80,10 @@ export default function RouteInfoCard({ marker, index }) {
   };
 
   const placesTypeReturns = () => {
-    if (placeType.includes("restaurant")) return true;
+    console.log(routeInfo);
+    if (placeType.includes("restaurant")) {
+      return true;
+    }
   };
 
   const handleTime = (ev) => {
@@ -81,33 +97,38 @@ export default function RouteInfoCard({ marker, index }) {
   const rating = routeInfo.rating;
 
   return (
-    <div>
-      {Object.keys(routeInfo).length !== 0 && (
-        <>
-          <div>{routeInfo.name}</div>
-          <div>Address: {routeInfo.vicinity}</div>
-          {showTimetables && (
-            <>
-              {areTimetables() &&
-                routeInfo.current_opening_hours.weekday_text.map(
-                  (day, index) => <div key={index}>{day}</div>
-                )}
-            </>
-          )}
-          {areTimetables() && (
-            <button onClick={() => setShowTimetables(!showTimetables)}>
-              Show Timetables
-            </button>
-          )}
-          <div className="pics"> {showPictures && arePictures()}</div>
+    <div className="waypoint-info-card-root">
+      <div className="waypoint-info-card">
+        {routeInfo.photos ? (
+          <div
+            className="waypoint-pic"
+            style={{ backgroundImage: `url(${routeInfo.photos[0].getUrl()})` }}
+          ></div>
+        ) : (
+          <></>
+        )}
+        {Object.keys(routeInfo).length !== 0 && (
+          <div className="waypoint-info">
+            <div className="waypoint-info-name">{routeInfo.name}</div>
+            <div className="waypoint-info-buttons">
+              {areTimetables() && (
+                <button onClick={() => setShowTimetables(!showTimetables)}>
+                  TIMETABLES
+                </button>
+              )}
 
-          <button onClick={() => setShowPictures(!showPictures)}>
-            Show Pictures
-          </button>
-          <div> {showReviews && areReviews()}</div>
-          <button onClick={() => setShowReviews(!showReviews)}>
-            Show Reviews
-          </button>
+              <button onClick={() => setShowPictures(!showPictures)}>
+                PICTURES
+              </button>
+              <button onClick={() => setShowReviews(!showReviews)}>
+                REVIEWS
+              </button>
+            </div>
+          </div>
+        )}
+      </div>
+      {index && (
+        <>
           {placesTypeReturns() && (
             <div>
               Set Normal Time to eat:
@@ -122,19 +143,37 @@ export default function RouteInfoCard({ marker, index }) {
           )}
         </>
       )}
-      {rating && <div>{rating}/5</div>}
-
-      <div>
-        <label htmlFor="">Description: </label>
-        <textarea
-          value={description}
-          onChange={handleDescription}
-          name=""
-          id=""
-          cols="30"
-          rows="10"
-          placeholder="optional"
-        ></textarea>
+      {index ? (
+        <div>
+          <label htmlFor="">Description: </label>
+          <textarea
+            value={description}
+            onChange={handleDescription}
+            name=""
+            id=""
+            cols="30"
+            rows="10"
+            placeholder="optional"
+          ></textarea>
+        </div>
+      ) : (
+        <></>
+      )}
+      <div className="waypoint-info-expand">
+        <div> {showReviews && areReviews()}</div>
+        <div>
+          <div className="pics"> {showPictures && arePictures()}</div>
+        </div>
+        <div>
+          {showTimetables && (
+            <>
+              {areTimetables() &&
+                routeInfo.current_opening_hours.weekday_text.map(
+                  (day, index) => <div key={index}>{day}</div>
+                )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );

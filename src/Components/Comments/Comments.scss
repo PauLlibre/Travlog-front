@@ -1,0 +1,21 @@
+@import "../../../styles/variables.scss";
+
+.comment {
+  background-color: $accentColor2;
+  color: black;
+}
+
+.comment-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  position: relative;
+  z-index: 0;
+}
+
+.comment-rating {
+  justify-self: flex-end;
+  position: absolute;
+  right: 10px;
+}

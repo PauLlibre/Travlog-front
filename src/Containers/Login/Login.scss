@@ -1,0 +1,48 @@
+@import "../../../styles/variables.scss";
+
+.login-root {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.form-button {
+  background-color: $primaryColor;
+  border: none;
+  width: 100px;
+  height: 30px;
+  border-radius: 10px;
+  color: $accentColor2;
+}
+
+.form-input {
+  width: 200px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.form-label {
+  letter-spacing: 2px;
+}
+
+.form-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 10%;
+  left: 35vw;
+}
+
+.login-background {
+  background-image: url("../../imgs/clouds.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}

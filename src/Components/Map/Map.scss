@@ -2,3 +2,32 @@
   width: 100%;
   height: 500px;
 }
+
+.route-create-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 50px;
+}
+
+.create-route-form-row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  padding-left: 30px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .route-create-root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding-top: 50px;
+    min-width: 100vw;
+
+  }
+}

@@ -1,0 +1,13 @@
+@media only screen and (min-width: 1024px) {
+  .my-posts-root {
+    padding-top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .feed-root {
+    min-width: 100vw;
+    padding-left: 20px;
+  }
+}

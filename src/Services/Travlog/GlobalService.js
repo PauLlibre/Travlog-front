@@ -2,8 +2,8 @@ import axios from "axios";
 
 const GlobalService = {};
 
-const baseUrl = "http://localhost:3000/search";
-const shortUrl = "http://localhost:3000/";
+const baseUrl = "https://13.37.220.253:3000/search";
+const shortUrl = "https://13.37.220.253:3000/";
 
 GlobalService.getEverythingSorted = async (sort = "date") => {
   const results = await axios.get(baseUrl + "?order=" + sort);

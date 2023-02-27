@@ -6,9 +6,6 @@ import RouteInfoCard from "../RouteInfoCard.js/RouteInfoCard";
 import { useSelector } from "react-redux";
 
 export default function RouteInfo({ markers }) {
-
-
-
   const info = markers.map((marker, index) => {
     return (
       <div key={marker.place_id}>

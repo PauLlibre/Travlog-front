@@ -4,12 +4,13 @@ import AuthService from "../../Services/Travlog/AuthService";
 import { validateLoginFormValues } from "../../Functions/form-utilities";
 import TokenStorageService from "../../Services/Travlog/TokenStorageService";
 import { useDispatch, useSelector } from "react-redux";
+import travlogLogo from "../../imgs//travlog-blue.png";
 import { login } from "../../Features/loginSlice";
+import "./Login.scss";
 
 export default function Login() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
- 
 
   const initialValues = {
     email: "",
@@ -64,22 +65,35 @@ export default function Login() {
   };
 
   return (
-    <div className="login-root">
-      <label htmlFor="">EMAIL</label>
-      <input
-        type="text"
-        value={formValues.email}
-        name="email"
-        onChange={handleChange}
-      />
-      <label htmlFor="">PASSWORD</label>
-      <input
-        type="password"
-        value={formValues.password}
-        onChange={handleChange}
-        name="password"
-      />
-      <button onClick={handleSubmit}>LOGIN</button>
+    <div className="login-background">
+      <div className="form-header">
+        <img src={travlogLogo} alt="" className="logo" />
+      </div>
+      <div className="login-root">
+        <label className="form-label" htmlFor="">
+          EMAIL
+        </label>
+        <input
+          className="form-input"
+          type="text"
+          value={formValues.email}
+          name="email"
+          onChange={handleChange}
+        />
+        <label className="form-label" htmlFor="">
+          PASSWORD
+        </label>
+        <input
+          className="form-input"
+          type="password"
+          value={formValues.password}
+          onChange={handleChange}
+          name="password"
+        />
+        <button className="form-button" onClick={handleSubmit}>
+          LOGIN
+        </button>
+      </div>
     </div>
   );
 }

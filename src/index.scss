@@ -1,0 +1,39 @@
+@import "../styles/variables";
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: $primaryFont;
+}
+
+.icon {
+  width: 20px;
+}
+
+select {
+  position: relative;
+  display: inline-block;
+}
+
+select {
+  appearance: none;
+  font-family: $primaryFont;
+  padding: 10px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  background-color: #fff;
+  cursor: pointer;
+}
+
+select select:focus {
+  outline: none;
+}
+
+select:after {
+  content: "\25BC";
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}

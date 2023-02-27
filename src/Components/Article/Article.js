@@ -10,6 +10,7 @@ import GlobalService from "../../Services/Travlog/GlobalService";
 import PostService from "../../Services/Travlog/PostService";
 import { useDispatch, useSelector } from "react-redux";
 import { deleted } from "../../Features/deleteArticleSlice";
+import { useLocation } from "react-router-dom";
 
 export default function Article({
   title,
@@ -24,6 +25,7 @@ export default function Article({
 }) {
   // VARIABLES
   const dispatch = useDispatch();
+  const { pathname } = useLocation();
   const [user, setUser] = useState({});
   const [image, setImage] = useState();
   const [content, setContent] = useState("");
@@ -33,6 +35,9 @@ export default function Article({
   const [newDescription, setNewDescription] = useState(description);
   const [editMode, setEditMode] = useState(false);
   const [type, setType] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [currentUser, setCurrentUser] = useState("");
+  const currentUserId = localStorage.getItem("USER");
   const ArticleDeleted = useSelector((state) => {
     return state.deleteArticle.isDeleted;
   });
@@ -41,10 +46,17 @@ export default function Article({
   useEffect(() => {
     if (maps) setType("route");
     else setType("post");
-    getUserById();
-    getImage();
-    getArticle();
-  }, [submit, ArticleDeleted]);
+    if (!currentUser) {
+      getUserById();
+      getCurrentUserById();
+      getImage();
+      getArticle();
+    }
+    console.log(user, pathname);
+    if (currentUser == "admin" && pathname == "/admin") {
+      setIsAdmin(true);
+    }
+  }, [submit, ArticleDeleted, currentUser]);
 
   //GET COMMENTS
   const getArticle = async () => {
@@ -53,9 +65,15 @@ export default function Article({
   };
 
   // GET TIME DIFF
-  const timeCreated = getTimeDifference(createdAt);
+  const timeCreated = getTimeDifference.ByDate(createdAt);
 
-  //GET USER NAME
+  //GET CURRENT USER
+  const getCurrentUserById = async () => {
+    const result = await UserService.getUserById(currentUserId);
+    setCurrentUser(result.role);
+  };
+
+  //GET ARTICLE USER NAME
   const getUserById = async () => {
     const result = await UserService.getUserById(user_id);
     setUser(result);
@@ -122,6 +140,7 @@ export default function Article({
 
   return (
     <div className="article-root">
+      {isAdmin && <button onClick={handleDelete}>DELETE</button>}
       <div>
         {profile ? (
           editMode ? (

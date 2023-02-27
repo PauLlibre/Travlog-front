@@ -1,0 +1,57 @@
+@import "../../../styles/variables";
+
+.article-card {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.user-profile-pic {
+  width: 50px;
+  height: 50px;
+  border-radius: 50px;
+  background-color: lightgrey;
+}
+
+.article-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.article-pic {
+  min-height: 500px;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.route-details {
+  display: flex;
+  justify-content: space-around;
+}
+
+.route-detail {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.article-location {
+  font-size: 0.9rem;
+  color: $accentColor1;
+}
+
+.article-info {
+  font-size: 0.7rem;
+  padding-left: 10px;
+  color: gray;
+}
+
+@media only screen and (min-width: 1024px) {
+  .article-pic {
+    min-height: 500px;
+    min-width: 500px;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+}

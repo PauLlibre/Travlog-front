@@ -1,0 +1,21 @@
+.admin-panel-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 90px;
+}
+
+.user-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.admin-panel-logo {
+  margin-top: 20px;
+}
+
+.users-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

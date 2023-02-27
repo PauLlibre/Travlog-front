@@ -6,6 +6,7 @@ import usePlacesAutocomplete, {
   getLatLng,
 } from "use-places-autocomplete";
 import { add } from "../../Features/routeCreation";
+import "./Places.scss";
 
 export default function Places({ setSelected, setMarkers }) {
   const dispatch = useDispatch();
@@ -31,23 +32,26 @@ export default function Places({ setSelected, setMarkers }) {
   };
 
   return (
-    <>
+    <div className="address-search">
       <input
+        className="form-input"
         type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         disabled={!ready}
         placeholder="Search an address"
       />
-      {status === "OK" &&
-        data.map(({ place_id, description }) => (
-          <div
-            onClick={() => handleSelect(description, place_id)}
-            key={place_id}
-          >
-            {description}
-          </div>
-        ))}
-    </>
+      {status === "OK" && (
+        <div className="options">
+          <select onChange={(e) => handleSelect(e.target.value)}>
+            {data.map(({ place_id, description }) => (
+              <option key={place_id} value={description}>
+                {description}
+              </option>
+            ))}
+          </select>
+        </div>
+      )}
+    </div>
   );
 }

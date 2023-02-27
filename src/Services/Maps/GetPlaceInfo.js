@@ -1,6 +1,7 @@
 const GetPlaceInfo = {};
 
 GetPlaceInfo.getByMarker = (placeId, callback) => {
+  console.log(placeId);
   if (placeId) {
     const service = new window.google.maps.places.PlacesService(
       document.createElement("div")

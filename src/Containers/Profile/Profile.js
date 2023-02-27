@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import UserService from "../../Services/Travlog/UserService";
 import { deleted } from "../../Features/deleteArticleSlice";
 import { useDispatch } from "react-redux";
+import travlogLogo from "../../imgs/travlog-blue.png";
+import "./Profile.scss";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -45,37 +47,70 @@ export default function Profile() {
     dispatch(deleted());
   };
   return (
-    <div>
-      <button onClick={() => setEditProfile(!editProfile)}>EDIT PROFILE</button>
-      {editProfile ? <button onClick={handleSaveChanges}>SAVE</button> : <></>}
-      {editProfile ? (
-        <div>
-          Name:<input value={newName} onChange={handleNewName}></input>
+    <div className="porfile-root">
+      <div className="header">
+        <img src={travlogLogo} alt="" className="logo" />
+      </div>
+      <div className="profile-form-root">
+        <div className="edit-profile-buttons">
+          <button
+            className="form-button"
+            onClick={() => setEditProfile(!editProfile)}
+          >
+            EDIT PROFILE
+          </button>
+          {editProfile ? (
+            <button className="form-button" onClick={handleSaveChanges}>
+              SAVE
+            </button>
+          ) : (
+            <></>
+          )}
         </div>
-      ) : (
-        <div>{user.name}</div>
-      )}
-      {editProfile ? (
-        <div>
-          Email:<input value={newEmail} onChange={handleNewEmail}></input>
-        </div>
-      ) : (
-        <div>{user.email}</div>
-      )}
-      <button onClick={() => setChangePassword(!changePassword)}>
-        CHANGE PASSWORD
-      </button>
-      {changePassword ? (
-        <div>
-          <input
-            type="password"
-            value={newPassword}
-            onChange={handleNewPassword}
-          ></input>
-        </div>
-      ) : (
-        <></>
-      )}
+
+        {editProfile ? (
+          <div>
+            Name:
+            <input
+              className="form-input"
+              value={newName}
+              onChange={handleNewName}
+            ></input>
+          </div>
+        ) : (
+          <div>{user.name}</div>
+        )}
+        {editProfile ? (
+          <div>
+            Email:
+            <input
+              className="form-input"
+              value={newEmail}
+              onChange={handleNewEmail}
+            ></input>
+          </div>
+        ) : (
+          <div>{user.email}</div>
+        )}
+        <button
+          className="form-button"
+          onClick={() => setChangePassword(!changePassword)}
+        >
+          CHANGE PASSWORD
+        </button>
+        {changePassword ? (
+          <div>
+            <input
+              className="form-input"
+              type="password"
+              value={newPassword}
+              onChange={handleNewPassword}
+            ></input>
+          </div>
+        ) : (
+          <></>
+        )}
+      </div>
     </div>
   );
 }

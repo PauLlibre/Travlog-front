@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import GlobalService from "../../Services/Travlog/GlobalService";
 import Article from "../../Components/Article/Article";
 import { useSelector } from "react-redux";
+import SimplifiedArticle from "../../Components/SimplifiedArticle/SimplifiedArticle";
+import "./MyPosts.scss";
 
 export default function MyPosts() {
   const [type, setType] = useState("all");
@@ -23,10 +25,10 @@ export default function MyPosts() {
 
   const ArticlesList = article.map((article) => {
     return (
-      <Article
-        title={article.title}
+      <SimplifiedArticle
+        article_id={article._id}
         key={article._id}
-        description={article.description}
+        firstArticle={article}
         user_id={article.user_id}
         comments={article.comments}
         rating={article.rating}
@@ -40,14 +42,22 @@ export default function MyPosts() {
   });
 
   return (
-    <div>
-      <select value={type} onChange={(e) => setType(e.target.value)}>
-        <option value="">Select type</option>
-        <option value="route">Route</option>
-        <option value="post">Post</option>
-        <option value="all">All</option>
-      </select>
-      <div>{ArticlesList}</div>
+    <div className="my-posts-root">
+      <div className="select">
+        FILTER
+        <select
+          className="select"
+          value={type}
+          onChange={(e) => setType(e.target.value)}
+        >
+          <option value="">Select type</option>
+          <option value="route">Route</option>
+          <option value="post">Post</option>
+          <option value="all">All</option>
+        </select>
+      </div>
+
+      <div className="feed-root">{ArticlesList}</div>
     </div>
   );
 }

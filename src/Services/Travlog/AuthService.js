@@ -2,7 +2,7 @@ import axios from "axios";
 
 const AuthService = {};
 
-const authApiUrl = "http://localhost:3000/auth";
+const authApiUrl = "https://13.37.220.253:3000/auth";
 
 AuthService.login = async (credentials) => {
   return await axios.post(authApiUrl + "/login", {

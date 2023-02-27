@@ -2,7 +2,7 @@ import axios from "axios";
 
 const PostService = {};
 
-const baseUrl = "http://localhost:3000/";
+const baseUrl = "https://13.37.220.253:3000/";
 
 PostService.makePost = async (
   id,
@@ -11,16 +11,16 @@ PostService.makePost = async (
   description,
   map,
   city,
-  route,
-  duration
+  duration,
+  details
 ) => {
-  const details = {
+  const route_details = {
     user_id: id,
     title,
     description,
     map,
     city,
-    route_description: route.details,
+    route_description: details,
     duration,
   };
 
@@ -30,11 +30,11 @@ PostService.makePost = async (
   try {
     switch (type) {
       case "post":
-        res = await axios.post(baseUrl + "post", details);
+        res = await axios.post(baseUrl + "post", route_details);
         return res;
 
       case "route":
-        res = await axios.post(baseUrl + "route", details);
+        res = await axios.post(baseUrl + "route", route_details);
         return res;
     }
   } catch (error) {

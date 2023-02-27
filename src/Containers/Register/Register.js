@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { country_list } from "../../Data/countries";
 import { validateLoginFormValues } from "../../Functions/form-utilities";
 import AuthService from "../../Services/Travlog/AuthService";
+import travlogLogo from "../../imgs/travlog-blue.png";
+import "./Register.scss";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -60,30 +62,44 @@ export default function Register() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} noValidate>
-        <label htmlFor="">NAME</label>
+      <form className="login-root" onSubmit={handleSubmit} noValidate>
+        <img src={travlogLogo} alt="" className="logo" />
+
+        <label className="form-label" htmlFor="">
+          NAME
+        </label>
         <input
+          className="form-input"
           type="text"
           name="name"
           value={formValues.name}
           onChange={handleChange}
         />
-        <label htmlFor="">EMAIL</label>
+        <label className="form-label" htmlFor="">
+          EMAIL
+        </label>
         <input
+          className="form-input"
           type="email"
           name="email"
           value={formValues.email}
           onChange={handleChange}
         />
-        <label htmlFor="">PASSWORD</label>
+        <label className="form-label" htmlFor="">
+          PASSWORD
+        </label>
         <input
+          className="form-input"
           type="password"
           name="password"
           value={formValues.password}
           onChange={handleChange}
         />
-        <label htmlFor="">NATIONALITY</label>
+        <label className="form-label" htmlFor="">
+          NATIONALITY
+        </label>
         <select
+          className="form-input"
           value={nationality}
           onChange={(e) => setNationality(e.target.value)}
         >
@@ -93,12 +109,17 @@ export default function Register() {
             </option>
           ))}
         </select>
-        <label htmlFor="">BIRTHDAY</label>
+        <label className="form-label" htmlFor="">
+          BIRTHDAY
+        </label>
         <DatePicker
+          className="form-input birthday-input"
           selected={birthDate}
           onChange={(date) => setBirthDate(date)}
         />
-        <button onClick={handleSubmit}>REGISTER</button>
+        <button className="form-button" onClick={handleSubmit}>
+          REGISTER
+        </button>
       </form>
     </div>
   );

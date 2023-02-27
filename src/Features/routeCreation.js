@@ -13,11 +13,13 @@ const createRouteSlice = createSlice({
       return state.filter((_, i) => i !== action.payload);
     },
     update(state, action) {
-      const { index, description, time } = action.payload;
+      const { index, description, time, duration, placeType } = action.payload;
       state[index] = {
         ...state[index],
         description,
         time,
+        duration,
+        placeType,
       };
       return state;
     },

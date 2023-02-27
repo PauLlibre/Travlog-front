@@ -7,7 +7,8 @@ const baseUrl =
 
 ImageService.getImage = async (title) => {
   const res = await axios.get(baseUrl + title);
-  return res.data.results[0].urls.full;
+  console.log(res.data.results[0]);
+  return res.data.results[0].urls.regular;
 };
 
 export default ImageService;

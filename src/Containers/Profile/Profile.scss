@@ -1,0 +1,25 @@
+@import "../../../styles/variables";
+
+.profile-root {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  height: 100vh;
+  gap: 20px;
+}
+
+.profile-form-root {
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+
+  gap: 80px;
+}
+
+.edit-profile-buttons {
+  display: flex;
+  gap: 10px;
+}

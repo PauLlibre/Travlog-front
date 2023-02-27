@@ -1,6 +1,36 @@
+@import "../../../styles/variables";
+
+.waypoint-info-card-root {
+  display: flex;
+  flex-direction: column;
+  background-color: $primaryColor;
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  color: $accentColor2;
+  gap: 10px;
+}
+.waypoint-info-card {
+  display: flex;
+}
+
+.waypoint-info-card button {
+  font-family: $primaryFont;
+  max-width: fit-content;
+  border-radius: 10px;
+  border: none;
+  height: 30px;
+}
+
+.waypoint-info-expand {
+  max-width: fit-content;
+}
+
 .pics {
   display: flex;
   overflow: scroll;
+  max-width: 100%;
   gap: 10px;
 }
 
@@ -8,4 +38,53 @@
   max-width: 200px;
   max-height: 200px;
   border-radius: 10px;
+}
+
+.waypoint-pic {
+  width: 100%;
+  height: 100%;
+  min-width: 100px;
+  min-height: 100px;
+  max-width: 100px;
+  max-height: 100px;
+  display: flex;
+  background-size: cover;
+  border-radius: 10px;
+}
+
+.waypoint-pic img {
+  max-width: 100%;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.waypoint-info {
+  display: flex;
+  flex-direction: column;
+  padding-left: 10px;
+  justify-content: space-between;
+}
+
+.waypoint-info-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  padding-top: 30px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .waypoint-info-card-root {
+    display: flex;
+    flex-direction: column;
+    background-color: $primaryColor;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    color: $accentColor2;
+    gap: 10px;
+    max-width: 60%;
+  }
 }
