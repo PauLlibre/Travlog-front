@@ -1,3 +1,39 @@
+# Traveling Web App
+
+Welcome to the Traveling Web App! This app allows users to browse routes that other users have created, as well as create their own routes. Routes are made by choosing the city you want to make the route in, adding a title and a description to it, and using the Google Maps API to create complex routes that pass through specific tourist places. This way, users can decide which route to pick when they visit a country, and the route will provide them with information about the places they are going to visit.
+
+## Early Stages
+
+It is important to note that the application is still in really early stages of development. The app is currently deployed in AWS S3, Mongo Atlas and Railway for the API, and there are a lot of bugs that need to be fixed. However, we are actively working on improving the app and fixing any issues that arise.
+
+## Features
+
+- Browse routes created by other users
+- Create your own routes by choosing a city and adding a title and description
+- Use the Google Maps API to create complex routes that pass through specific tourist places
+- Learn about the places you will visit through the route description
+- Share routes with other users
+
+## Technologies
+
+The front-end of the app was made using JSX, Sass and JavaScript. The back-end uses MongoDB for storing data and Railway for the API. Google Maps API is used to create and display routes.
+
+## Known Bugs
+
+- Search bar not working
+- First page presented is empty; you need to press the "Home" button
+- To share a route, you need to first press the "Share Route" button and after the "Share" button
+- Styles are currently a placeholder
+
+## Getting Started
+
+To get started with the app, simply visit the deployed website and start browsing the available routes. To create your own route, simply click on the "Create Route" button and follow the instructions on the screen.
+
+## Contributing
+
+We welcome contributions to the Traveling Web App! If you find a bug or have an idea for a new feature, please open an issue on our GitHub repository. If you would like to contribute code, please open a pull request.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
